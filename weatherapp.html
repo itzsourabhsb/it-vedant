@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather App</title>
+  <style>
+   
+      
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      border-collapse: collapse;
+      margin: 20px auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #333;
+      color: #fff;
+    }
+    input[type="text"] {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    input[type="submit"] {
+      padding: 8px 20px;
+      border: none;
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+    #cityname, #temp {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 20px;
+      color: #333;
+    }
+  </style>  
+</head>
+<body>
+  <h1>Weather App</h1>
+  <table>
+    <form>
+      <tr>
+        <th>City</th>
+        <td><input type="text" id="city"></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center"><input type="submit" value="Submit" id="submit"></td>
+      </tr>
+    </form>
+  </table>
+
+  <span id="cityname"></span>
+  <span id="temp"></span>
+
+
+<script>
+
+const options = {
+  method: 'GET',
+  url: 'https://weather-by-api-ninjas.p.rapidapi.com/v1/weather',
+  params: {city: 'Seattle'},
+  headers: {
+    'X-RapidAPI-Key': 'b23c2f35a3msha05d8916f6084cfp125afdjsn3a22c3719668',
+    'X-RapidAPI-Host': 'weather-by-api-ninjas.p.rapidapi.com'
+  }
+};
+
+const cityname = document.getElementById('cityname');
+const temp = document.getElementById('temp');
+const cityInput = document.getElementById('city');
+const submitBtn = document.getElementById('submit');
+
+const weatherapp = (city) => {
+  cityname.innerHTML = city;
+  fetch("https://weather-by-api-ninjas.p.rapidapi.com/v1/weather?city=" + city , options)
+    .then((response) => { return response.json(); })
+    .then((data) => {
+      console.log(data);
+      temp.innerHTML = data.temp;
+    });
+}
+
+submitBtn.addEventListener("click",(event) => {
+  event.preventDefault();
+  weatherapp(cityInput.value);
+});
+
+weatherapp("pune");
+
+
+</script>
+</body>
+</html>
